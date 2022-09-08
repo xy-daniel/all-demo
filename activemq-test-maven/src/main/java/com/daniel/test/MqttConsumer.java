@@ -26,10 +26,14 @@ public class MqttConsumer {
         connectOptions.setUserName(USER_NAME);
         connectOptions.setPassword(PASSWORD.toCharArray());
         connectOptions.setKeepAliveInterval(20);
+//        String[] urls = {"tcp://175.24.172.160:1883","tcp://175.24.172.160:1883"};
+//        connectOptions.setServerURIs(urls); //这个是mqtt客户端实现的负载均衡和容错
         mqttClient.connect(connectOptions);
         System.out.println("connect success");
         int[] qos = {QOS};
         String[] topics = {"foo.bar"};
         mqttClient.subscribe(topics, qos, new IMqttMessageListener[]{(s, mqttMessage) -> System.out.println("收到新消息：" + s + " > " + mqttMessage.toString())});
     }
+
+
 }
