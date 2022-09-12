@@ -1,4 +1,4 @@
-package com.daniel.test;
+package com.daniel.test.mqtt;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;

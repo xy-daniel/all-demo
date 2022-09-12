@@ -1,4 +1,4 @@
-package com.daniel.test;
+package com.daniel.test.mqtt;
 
 import org.eclipse.paho.client.mqttv3.IMqttMessageListener;
 import org.eclipse.paho.client.mqttv3.MqttClient;
@@ -31,7 +31,7 @@ public class MqttConsumer {
         mqttClient.connect(connectOptions);
         System.out.println("connect success");
         int[] qos = {QOS};
-        String[] topics = {"foo.bar"};
+        String[] topics = {"test"};
         mqttClient.subscribe(topics, qos, new IMqttMessageListener[]{(s, mqttMessage) -> System.out.println("收到新消息：" + s + " > " + mqttMessage.toString())});
     }
 

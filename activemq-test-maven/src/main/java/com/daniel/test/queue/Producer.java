@@ -1,11 +1,11 @@
-package com.daniel.test;
+package com.daniel.test.queue;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
 
 /**
- * 生产者
+ * 简单生产者
  * @author daniel
  */
 public class Producer {
@@ -16,7 +16,9 @@ public class Producer {
 
         try {
             //1.创建连接工厂
-            connectionFactory = new ActiveMQConnectionFactory("admin", "admin", "tcp://175.24.172.160:61616");
+            String brokerUrl = "tcp://175.24.172.160:61616";//单体模式
+//            String brokerUrl = "failover:(tcp://175.24.172.160:61616,tcp://175.24.172.160:61616,tcp://175.24.172.160:61616)?initialReconnectDelay=100";//集群模式
+            connectionFactory = new ActiveMQConnectionFactory("admin", "admin", brokerUrl);
             //2.创建连接
             connection = connectionFactory.createConnection();
             connection.start();

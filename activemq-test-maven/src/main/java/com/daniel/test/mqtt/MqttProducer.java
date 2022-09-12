@@ -1,9 +1,8 @@
-package com.daniel.test;
+package com.daniel.test.mqtt;
 
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
-import javax.jms.TextMessage;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.Executors;
 

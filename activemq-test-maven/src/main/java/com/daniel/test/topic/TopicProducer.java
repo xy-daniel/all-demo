@@ -1,4 +1,4 @@
-package com.daniel.test;
+package com.daniel.test.topic;
 
 
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -8,7 +8,8 @@ import javax.jms.*;
 public class TopicProducer {
 
     public static void main(String[] args) {
-        new ProducerThread("tcp://175.24.172.160:61616", "test");
+        ProducerThread producerThread = new ProducerThread("tcp://175.24.172.160:61616", "test");
+        producerThread.start();
     }
 
     static class ProducerThread extends Thread {
@@ -37,12 +38,13 @@ public class TopicProducer {
                 MessageProducer producer = session.createProducer(topic);
                 //6.设置生产者模式 队列数据清空或保存
                 producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
-                //7.创建一条消息
-                String text = "Hello World!";
-                TextMessage textMessage = session.createTextMessage(text);
-                //8.发送消息
-                producer.send(textMessage);
-                System.out.println("消息发送成功......");
+                //7.发送消息
+                for (int i = 0; i < 100; i++) {
+                    String text = "Hello World --- " + i + "!";
+                    TextMessage textMessage = session.createTextMessage(text);
+                    producer.send(textMessage);
+                    System.out.println("消息发送成功......");
+                }
             } catch (JMSException e) {
                 e.printStackTrace();
             } finally {
