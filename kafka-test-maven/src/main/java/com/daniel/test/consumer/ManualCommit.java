@@ -14,9 +14,12 @@ public class ManualCommit {
         Properties properties = new Properties();
         properties.setProperty("bootstrap.servers", "175.24.172.160:9092");
         properties.setProperty("group.id", "test");
+
         properties.setProperty("enable.auto.commit", "false");
+
         properties.setProperty("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         properties.setProperty("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(properties);
         consumer.subscribe(Collections.singletonList("market_topic"));
 
@@ -36,8 +39,6 @@ public class ManualCommit {
                 insertToDB(buffer);  //模拟插入数据库
 
                 System.out.println("======>>>offset commit...");
-                //数据处理完成但是提交失败,会导致数据的重复消费
-                //数据没有达到需要处理的阈值完成之后自动提交会导致丢数据
                 consumer.commitSync();
                 buffer.clear();
             }
