@@ -10,10 +10,13 @@ import org.apache.zookeeper.Watcher;
 
 import java.util.List;
 
+/**
+ * @author daniel
+ */
 public class MyZkClient {
 
     static String PATH = "/";
-    static org.I0Itec.zkclient.ZkClient ZKCLIENT = new ZkClient("175.24.172.160:2181", 50000);
+    static ZkClient ZKCLIENT = new ZkClient("175.24.172.160:2181", 50000);
 
     public static void main(String[] args) {
         createNode();
