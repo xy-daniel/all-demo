@@ -24,7 +24,7 @@ public class MyCuratorClient {
     /**
      * 初始化客户端
      */
-    public static void init() {
+    private static void init() {
         //1 重试策略：初试时间为3s 重试10次
         RetryPolicy retryPolicy = new ExponentialBackoffRetry(3000, 10);
         //2 通过工厂创建连接
@@ -40,7 +40,7 @@ public class MyCuratorClient {
     /**
      * 创建节点
      */
-    public static void create() throws Exception {
+    private static void create() throws Exception {
         System.out.println("--------------------create--------------------");
         curatorFramework.create()
                 .withMode(CreateMode.PERSISTENT)
@@ -69,7 +69,7 @@ public class MyCuratorClient {
     /**
      * 节点查询
      */
-    public static void get() throws Exception {
+    private static void get() throws Exception {
         System.out.println("--------------------get--------------------");
         String test1 = new String(curatorFramework.getData().forPath("/test/1"));
         System.out.println("/test/1:" + test1);
@@ -90,7 +90,7 @@ public class MyCuratorClient {
     /**
      * 修改节点
      */
-    public static void update() throws Exception {
+    private static void update() throws Exception {
         System.out.println("--------------------update--------------------");
         curatorFramework.setData().forPath("/test/1", "root update".getBytes());
         curatorFramework.setData().forPath("/test/2/3", "root update".getBytes());
@@ -107,7 +107,7 @@ public class MyCuratorClient {
     /**
      * 删除节点
      */
-    public static void delete() throws Exception {
+    private static void delete() throws Exception {
         curatorFramework.delete().forPath("/test/1");
 
         curatorFramework.delete().withVersion(1).forPath("/test/2/3");
@@ -126,7 +126,7 @@ public class MyCuratorClient {
     /**
      * 获取子节点
      */
-    public static void getChildren() throws Exception {
+    private static void getChildren() throws Exception {
         System.out.println("--------------------getChildren--------------------");
         List<String> list = curatorFramework.getChildren().forPath("/test");
         System.out.println(list);
@@ -143,7 +143,7 @@ public class MyCuratorClient {
     /**
      * 查询节点是否存在
      */
-    public static void isExists() throws Exception {
+    private static void isExists() throws Exception {
         System.out.println("--------------------isExists--------------------");
         Stat stat = curatorFramework.checkExists().forPath("/test");
         System.out.println(stat == null ? "null" : stat.toString());
@@ -165,7 +165,7 @@ public class MyCuratorClient {
     /**
      * 监听事件
      */
-    public static void listen() throws Exception {
+    private static void listen() throws Exception {
         final NodeCache cache = new NodeCache(curatorFramework, "/test", false);
         cache.start(true);
         cache.getListenable().addListener(() -> {
