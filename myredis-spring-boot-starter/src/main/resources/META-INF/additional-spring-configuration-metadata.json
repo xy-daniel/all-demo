@@ -1,0 +1,20 @@
+{
+    "properties": [
+        {
+          "name": "com.daniel.host",
+          "type": "java.lang.String",
+          "description": "redis服务器地址.",
+          "defaultValue": "127.0.0.1"
+        }, {
+          "name": "com.daniel.port",
+          "type": "java.lang.Integer",
+          "description": "redis服务器端口.",
+          "defaultValue": 6379
+        },{
+        "name": "com.daniel.password",
+        "type": "java.lang.String",
+        "description": "redis服务器密码.",
+        "defaultValue": ""
+      }
+    ]
+}
