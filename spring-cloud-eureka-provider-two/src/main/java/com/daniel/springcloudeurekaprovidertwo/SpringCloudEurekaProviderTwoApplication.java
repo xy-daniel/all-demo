@@ -20,7 +20,8 @@ public class SpringCloudEurekaProviderTwoApplication {
     }
 
     @GetMapping("")
-    public Object index() {
+    public Object index() throws InterruptedException {
+        Thread.sleep(1000);
         return "This is service2's response!";
     }
 
