@@ -1,0 +1,56 @@
+# 应用名称
+spring:
+  application:
+#    name: spring-cloud-feign-consumer
+    name: hahaha
+# 应用服务 WEB 访问端口
+server:
+  port: 80
+# Actuator Web 访问端口
+management:
+  server:
+    port: 8081
+  endpoints:
+    jmx:
+      exposure:
+        include: "*"
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+# Eureka配置
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10002/eureka/
+
+# feign中集成hystrix
+feign:
+  hystrix:
+    enabled: true
+  client:
+    config:
+      default:
+        connectTimeout: 6000
+        readTimeut: 6000
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 100
+      circuitBreaker:
+        requestVolumeThreshold: 1
+        errorThresholdPercentage: 20
+        sleepWindowInMilliseconds: 5000
+      metrics:
+        rollingStats:
+          timeInMilliseconds: 10000
+
