@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 @Component
-@FeignClient(name = "haihaihai", fallback = HelloFallback.class)
+@FeignClient(name = "SPRING-CLOUD-EUREKA-PROVIDER", fallback = HelloFallback.class)
 public interface HelloService {
 
     @GetMapping(value = "/")

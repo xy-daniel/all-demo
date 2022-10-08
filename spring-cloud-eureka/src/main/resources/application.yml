@@ -1,113 +1,111 @@
-# 单体eureka配置
-## 应用名称
-#spring:
-#  application:
-#    name: spring-cloud-eureka
-## 应用服务 WEB 访问端口
-#server:
-#  port: 10000
-## Actuator Web 访问端口
-#management:
-#  server:
-#    port: 8081
-#  endpoints:
-#    jmx:
-#      exposure:
-#        include: '*'
-#    web:
-#      exposure:
-#        include: '*'
-#    health:
-#      show-details: always
-## Eureka配置
-#eureka:
-#  # 实例信息
-#  instance:
-#    hostname: dev
-#    instance-id: dev
-#  # 作为客户端的配置
-#  client:
-#    fetch-registry: false # 是否从Eureka获取配置 - 不
-#    register-with-eureka: false # 是否将本服务注册进Eureka - 不
-##    availability-zones:
-##      beijing: zone-1
-#    service-url:
-##      zone1: http://localhost:10001/eureka
-#      defaultZone: http://127.0.0.1:10000/eureka # 默认区域 - 本地
-#  # 作为服务端的配置
-#  server:
-#    wait-time-in-ms-when-sync-empty: 0 # 没有数据等待时长 - 0
-#    enable-self-preservation: true # 自我保护机制 - 开启
-#    peer-eureka-nodes-update-interval-ms: 1000000 # 服务节点更新时间间隔
-
-
+# 应用名称
 spring:
-  profiles:
-    active: dev3
-
----
-spring:
-  profiles: dev1
   application:
-    name: eureka-peer1
+    name: spring-cloud-eureka
+# 应用服务 WEB 访问端口
 server:
   port: 10000
-
-eureka:
-  instance:
-    hostname: dev1
-    instance-id: dev1
-  client:
-    fetch-registry: false
-    register-with-eureka: false
-    service-url:
-      defaultZone: http://127.0.0.1:10000/eureka/,http://127.0.0.1:10001/eureka/,http://127.0.0.1:10002/eureka/ # 通过这个进行对等协议的消息同步,没有master,flower
+# Actuator Web 访问端口
+management:
   server:
-    wait-time-in-ms-when-sync-empty: 0
-    enable-self-preservation: true
-    peer-eureka-nodes-update-interval-ms: 10000
-
----
-spring:
-  profiles: dev2
-  application:
-    name: eureka-peer2
-server:
-  port: 10001
-
+    port: 8081
+  endpoints:
+    jmx:
+      exposure:
+        include: '*'
+    web:
+      exposure:
+        include: '*'
+    health:
+      show-details: always
+# Eureka配置
 eureka:
+  # 实例信息
   instance:
-    hostname: dev2
-    instance-id: dev2
+    hostname: dev
+    instance-id: dev
+  # 作为客户端的配置
   client:
-    fetch-registry: false
-    register-with-eureka: false
+    fetch-registry: true # 是否从Eureka获取配置 - 不
+    register-with-eureka: true # 是否将本服务注册进Eureka - 不
+#    availability-zones:
+#      beijing: zone-1
     service-url:
-      defaultZone: http://127.0.0.1:10000/eureka/,http://127.0.0.1:10001/eureka/,http://127.0.0.1:10002/eureka/
+#      zone1: http://localhost:10001/eureka
+      defaultZone: http://175.24.172.160:10000/eureka # 默认区域 - 本地
+  # 作为服务端的配置
   server:
-    wait-time-in-ms-when-sync-empty: 0
-    enable-self-preservation: true
-    peer-eureka-nodes-update-interval-ms: 10000
+    wait-time-in-ms-when-sync-empty: 0 # 没有数据等待时长 - 0
+    enable-self-preservation: true # 自我保护机制 - 开启
+    peer-eureka-nodes-update-interval-ms: 1000000 # 服务节点更新时间间隔
 
----
-spring:
-  profiles: dev3
-  application:
-    name: eureka-peer3
-server:
-  port: 10002
 
-eureka:
-  instance:
-    hostname: dev3
-    instance-id: dev3
-  client:
-    fetch-registry: false
-    register-with-eureka: false
-    service-url:
-      defaultZone: http://127.0.0.1:10002/eureka/
-  server:
-    wait-time-in-ms-when-sync-empty: 0
-    enable-self-preservation: true
-    peer-eureka-nodes-update-interval-ms: 10000
-
+#spring:
+#  profiles:
+#    active: dev1
+#
+#---
+#spring:
+#  profiles: dev1
+#  application:
+#    name: eureka-peer1
+#server:
+#  port: 10000
+#
+#eureka:
+#  instance:
+#    hostname: dev1
+#    instance-id: dev1
+#  client:
+#    fetch-registry: false
+#    register-with-eureka: false
+#    service-url:
+#      defaultZone: http://175.24.172.160:10000/eureka/,http://175.24.172.160:10001/eureka/,http://175.24.172.160:10002/eureka/ # 通过这个进行对等协议的消息同步,没有master,flower
+#  server:
+#    wait-time-in-ms-when-sync-empty: 0
+#    enable-self-preservation: true
+#    peer-eureka-nodes-update-interval-ms: 10000
+#
+#---
+#spring:
+#  profiles: dev2
+#  application:
+#    name: eureka-peer2
+#server:
+#  port: 10001
+#
+#eureka:
+#  instance:
+#    hostname: dev2
+#    instance-id: dev2
+#  client:
+#    fetch-registry: false
+#    register-with-eureka: false
+#    service-url:
+#      defaultZone: http://175.24.172.160:10000/eureka/,http://175.24.172.160:10001/eureka/,http://175.24.172.160:10002/eureka/
+#  server:
+#    wait-time-in-ms-when-sync-empty: 0
+#    enable-self-preservation: true
+#    peer-eureka-nodes-update-interval-ms: 10000
+#
+#---
+#spring:
+#  profiles: dev3
+#  application:
+#    name: eureka-peer3
+#server:
+#  port: 10002
+#
+#eureka:
+#  instance:
+#    hostname: dev3
+#    instance-id: dev3
+#  client:
+#    fetch-registry: false
+#    register-with-eureka: false
+#    service-url:
+#      defaultZone: http://175.24.172.160:10000/eureka/,http://175.24.172.160:10001/eureka/,http://175.24.172.160:10002/eureka/
+#  server:
+#    wait-time-in-ms-when-sync-empty: 0
+#    enable-self-preservation: true
+#    peer-eureka-nodes-update-interval-ms: 10000
