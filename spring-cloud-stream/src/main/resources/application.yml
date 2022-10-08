@@ -1,0 +1,73 @@
+# 应用
+spring:
+  application:
+    name: spring-cloud-stream
+  rabbitmq:
+    host: 175.24.172.160
+    port: 5672
+    username: guest
+    password: guest
+    publisher-confirm-type: correlated
+  cloud:
+    # bus配置
+    bus:
+      destination: bus-q
+      trace:
+        enabled: true
+    # stream配置
+    stream:
+      binders:
+        rabbit1:
+          type: rabbit
+          # 针对这个binder定义spring相关的配置
+          environment:
+            spring:
+              rabbitmq:
+                host: 175.24.172.160
+                port: 5672
+                username: guest
+                password: guest
+                publisher-confirm-type: correlated
+      bindings:
+        input:
+          binder: rabbit1
+          destination: things1
+          # 自定义消息转换
+          content-type: application/user
+        output:
+          binder: rabbit1
+          destination: things1
+          # 自定义消息转换
+          content-type: application/user
+        springCloudBusOutput:
+          binder: rabbit1
+        springCloudBusInput:
+            binder: rabbit1
+      default-binder: rabbit1
+  # 消息发送确认机制开启
+#    publisher-confirm-type: correlated
+# 应用端口
+server:
+  port: 80
+# Actuator Web 访问端口
+management:
+  server:
+    port: 8081
+  endpoints:
+    jmx:
+      exposure:
+        include: "*"
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+# 日志配置
+logging:
+  level:
+    org: INFO
+    com: INFO
+    cn: INFO
+
+# mq
