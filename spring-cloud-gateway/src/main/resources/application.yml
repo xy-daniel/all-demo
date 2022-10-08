@@ -1,0 +1,39 @@
+server:
+  port: 7000
+spring:
+  application:
+    # 应用名称
+    name: spring-cloud-gateway
+  # gateway配置
+  cloud:
+    gateway:
+#      routes:
+#        - id: daniel
+#          uri: http://www.baidu.com
+#          predicates:
+#            - Path=/ # 此路径在服务端必须存在
+#          filters:
+#            - JwtCheck
+      discovery:
+        locator:
+          enabled: true
+# request address: http://gatewayAddress/serviceId/url
+# Actuator Web 访问配置
+management:
+  endpoints:
+    jmx:
+      exposure:
+        include: "*"
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+  # eureka配置
+eureka:
+  client:
+#    enabled: false
+    service-url:
+      defaultZone: http://175.24.172.160:10000/eureka/
