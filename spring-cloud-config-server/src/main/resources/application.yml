@@ -1,0 +1,65 @@
+# 应用名称
+spring:
+  application:
+    name: spring-cloud-config-server
+  rabbitmq:
+    host: 175.24.172.160
+    port: 5672
+    username: guest
+    password: guest
+    publisher-confirm-type: correlated
+  cloud:
+    config:
+      server:
+        git:
+          # 生产环境中这儿应该是git地址
+          uri: F:\workspace\github\wangyi\spring-cloud-config-server\src\main\resources\configs
+        # 开启远程配置配置加密功能 - 需要配置秘钥在bootstrap.yml中
+        # POST http://host:port/encrypt body:content 可以对content进行加密
+        # POST http://host:port/decrypt body:content 可以对content进行解密
+        # POST http://clientHost:port/actuator.refresh 可以刷新客户端配置,但是已经读取的配置值是没有改变的 - 客户端可以通过增加@RefreshScope注解解决
+        # 每次都需要refresh太麻烦了,config-monitor可以监听配置改变bus事件,从而传播给客户端进行刷新
+        encrypt:
+          enabled: true
+    # bus配置
+    bus:
+      destination: bus-q
+      trace:
+        enabled: true
+    # stream配置
+    stream:
+      binders:
+        rabbit1:
+          type: rabbit
+      bindings:
+        output:
+          binder: rabbit1
+          destination: things1
+        springCloudBusOutput:
+          binder: rabbit1
+      default-binder: rabbit1
+#  security:
+#    user:
+#      password: admin
+#      name: admin
+# 应用服务 WEB 访问端口
+server:
+  port: 5000
+# Actuator Web 访问端口
+management:
+  endpoints:
+    jmx:
+      exposure:
+        include: "*"
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+# eureka配置
+eureka:
+  client:
+    service-url:
+      defaultZone: http://175.24.172.160:10000/eureka/
