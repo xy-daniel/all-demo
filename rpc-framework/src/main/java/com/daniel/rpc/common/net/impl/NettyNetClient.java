@@ -22,8 +22,6 @@ import java.util.Arrays;
  */
 public class NettyNetClient implements NetClient {
 
-    private static final Logger logger = LoggerFactory.getLogger(NettyNetClient.class);
-
     @Override
     public byte[] sendRequest(byte[] data, ServiceInfo serviceInfo) {
         String[] addressInfoArray = serviceInfo.getAddress().split(":");
@@ -44,7 +42,7 @@ public class NettyNetClient implements NetClient {
             //启动客户端连接
             bootstrap.connect(addressInfoArray[0], Integer.parseInt(addressInfoArray[1])).sync();
             respData = (byte[]) sendHandler.rspData();
-            logger.info("send request get reply:" + Arrays.toString(respData));
+            System.out.print("send request get reply:" + Arrays.toString(respData));
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {

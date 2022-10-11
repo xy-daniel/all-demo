@@ -1,6 +1,6 @@
 package com.daniel.rpc.demo.consumer;
 
-import com.daniel.rpc.common.net.client.ClientStubProxyFactory;
+import com.daniel.rpc.common.client.ClientStubProxyFactory;
 import com.daniel.rpc.common.discoverer.impl.ZookeeperServiceInfoDiscoverer;
 import com.daniel.rpc.common.net.impl.NettyNetClient;
 import com.daniel.rpc.common.protocol.MessageProtocol;

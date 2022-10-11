@@ -15,8 +15,6 @@ import java.util.concurrent.CountDownLatch;
  */
 public class SendHandler extends ChannelInboundHandlerAdapter {
 
-    private static Logger logger = LoggerFactory.getLogger(SendHandler.class);
-
     private CountDownLatch cdl = null;
     private Object readMsg = null;
     private byte[] data;
@@ -31,10 +29,10 @@ public class SendHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        logger.info("成功连接到服务端:ctx="+ctx);
+        System.out.println("成功连接到服务端:ctx="+ctx);
         ByteBuf byteBuf = Unpooled.buffer(data.length);
         byteBuf.writeBytes(data);
-        logger.info("客户端发送请求信息:" + byteBuf);
+        System.out.println("客户端发送请求信息:" + byteBuf);
         ctx.writeAndFlush(byteBuf);
     }
 
@@ -46,7 +44,7 @@ public class SendHandler extends ChannelInboundHandlerAdapter {
      */
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        logger.info("客户端读取响应信息:" + msg);
+        System.out.println("客户端读取响应信息:" + msg);
         ByteBuf msgBuf = (ByteBuf) msg;
         byte[] resp = new byte[msgBuf.readableBytes()];
         msgBuf.readBytes(resp);
@@ -62,7 +60,7 @@ public class SendHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         cause.printStackTrace();
-        logger.error("产生异常,异常信息为:" + cause.getMessage());
+        System.out.println("产生异常,异常信息为:" + cause.getMessage());
         ctx.close();
     }
 

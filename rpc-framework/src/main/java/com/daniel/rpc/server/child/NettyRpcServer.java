@@ -11,19 +11,13 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
 
 /**
  * Netty RPC服务端，提供Netty网络服务开启、关闭的能力
  *
- * @author zarlic
- * @date 2021.12.15 20:35
+ * @author daniel
  */
 public class NettyRpcServer extends RpcServer {
-    private static final Logger logger = LoggerFactory.getLogger(NettyRpcServer.class);
 
     private Channel channel;
 
@@ -40,14 +34,14 @@ public class NettyRpcServer extends RpcServer {
             b.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).option(ChannelOption.SO_BACKLOG, 100)
                     .handler(new LoggingHandler(LogLevel.INFO)).childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
-                        protected void initChannel(SocketChannel ch) throws Exception {
+                        protected void initChannel(SocketChannel ch) {
                             ChannelPipeline pipeline = ch.pipeline();
                             pipeline.addLast(new ChannelRequestHandler());
                         }
                     });
             // 启动服务
             ChannelFuture f = b.bind(port).sync();
-            logger.info("Server started successfully.");
+            System.out.println("Server started successfully.");
             channel = f.channel();
             // 等待服务通道关闭
             f.channel().closeFuture().sync();
@@ -61,39 +55,39 @@ public class NettyRpcServer extends RpcServer {
     }
 
     @Override
-    public void stop() throws IOException {
+    public void stop() {
         this.channel.close();
     }
 
     private class ChannelRequestHandler extends ChannelInboundHandlerAdapter {
 
         @Override
-        public void channelActive(ChannelHandlerContext ctx) throws Exception {
-            logger.info("Channel active：" + ctx);
+        public void channelActive(ChannelHandlerContext ctx) {
+            System.out.println("Channel active：" + ctx);
         }
 
         @Override
         public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-            logger.info("The server receives a message: {}", msg);
+            System.out.println("The server receives a message: " + msg);
             ByteBuf msgBuf = (ByteBuf) msg;
             byte[] req = new byte[msgBuf.readableBytes()];
             msgBuf.readBytes(req);
             byte[] res = handler.handleRequest(req);
-            logger.info("Send response：{}", msg);
+            System.out.println("Send response：" + msg);
             ByteBuf respBuf = Unpooled.buffer(res.length);
             respBuf.writeBytes(res);
             ctx.write(respBuf);
         }
 
         @Override
-        public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+        public void channelReadComplete(ChannelHandlerContext ctx) {
             ctx.flush();
         }
 
         @Override
-        public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
             cause.printStackTrace();
-            logger.error("Exception occurred：{}", cause.getMessage());
+            System.out.println("Exception occurred：" + cause.getMessage());
             ctx.close();
         }
     }

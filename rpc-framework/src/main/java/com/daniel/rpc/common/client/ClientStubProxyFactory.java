@@ -1,4 +1,4 @@
-package com.daniel.rpc.common.net.client;
+package com.daniel.rpc.common.client;
 
 import com.daniel.rpc.common.net.NetClient;
 import com.daniel.rpc.common.protocol.transform.Request;
@@ -60,12 +60,9 @@ public class ClientStubProxyFactory {
 
     private class ClientStubInvocationHandler implements InvocationHandler {
 
-        private Class<?> aInterface;
+        private final Class<?> aInterface;
 
-        private Random random = new Random();
-
-        private String toStringMethodName = "toString";
-        private String hashCodeMethodName = "hashCode";
+        private final Random random = new Random();
 
         public <T> ClientStubInvocationHandler(Class<T> aInterfaces) {
             super();
@@ -74,9 +71,11 @@ public class ClientStubProxyFactory {
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            String toStringMethodName = "toString";
             if (toStringMethodName.equals(method.getName())) {
                 return proxy.getClass().toString();
             }
+            String hashCodeMethodName = "hashCode";
             if (hashCodeMethodName.equals(method.getName())) {
                 return 0;
             }
