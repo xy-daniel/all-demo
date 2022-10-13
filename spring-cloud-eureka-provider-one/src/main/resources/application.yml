@@ -1,0 +1,34 @@
+# 应用名称
+spring:
+  application:
+    name: spring-cloud-eureka-provider
+# 应用服务 WEB 访问端口
+server:
+  port: 8001
+# eureka配置
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}
+    status-page-url-path: /actuator/info
+    health-check-url-path: /actuator/health
+    metadata-map: defaultZone
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    prefer-same-zone-eureka: true
+    # 地区
+    region: beijing
+    availability-zones:
+      beijing: defaultZone
+    service-url:
+      defaultZone: http://175.24.172.160:10000/eureka/
+
+# actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+

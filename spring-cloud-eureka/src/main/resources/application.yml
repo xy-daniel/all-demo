@@ -26,12 +26,11 @@ eureka:
     instance-id: dev
   # 作为客户端的配置
   client:
-    fetch-registry: true # 是否从Eureka获取配置 - 不
-    register-with-eureka: true # 是否将本服务注册进Eureka - 不
-#    availability-zones:
-#      beijing: zone-1
+    fetch-registry: false # 是否从Eureka获取配置 - 不
+    register-with-eureka: false # 是否将本服务注册进Eureka - 不
+    availability-zones:    # 区域隔离
+      beijing: defaultZone
     service-url:
-#      zone1: http://localhost:10001/eureka
       defaultZone: http://175.24.172.160:10000/eureka # 默认区域 - 本地
   # 作为服务端的配置
   server:
